@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Foc Project S2</title>
+    
+<link rel="stylesheet" href="style.css">
+
+</head>
+<body>
+
+    <nav id="topbar"><strong>Foc Project S2 by Aswin and Sidharth</strong></nav>
+
+    <main class="container" id="main-content" tabindex="0">
+      <div class="guide" id="hint">use [UP] [DOWN] arrows for navigation</div>
+      <section class="hero" id="fade-target">
+          <h1>ABC Systems</h1>
+          <p><B>A</B>ffordable <B>B</B>ike <B>C</B>alculators</p>
+          <p style="max-width: 600px;">Skipping the guesswork so you don't bite more than you can chew.</p>
+      </section>
+      <section >
+        <div class="dataPage">
+          <div class="dataBox forum">
+            <div class="post-box">
+            <h2>Enter the desired Search parameters</h2>
+            <input type="number" step="0.1" id="commuteDistance" placeholder="Daily commute distance (km)">
+            <input type="number" step="0.01" id="monthlyBudget" placeholder="Monthly budget for bike">
+            <select id="emiPlan">
+              <option value="" disabled selected>Select EMI Plan</option>
+            </select>
+            <button id="submitBtn">Post</button>
+            </div>
+          </div>
+          <div class="dataBox bikes">
+<!-- here bikes to be displayed -->
+          </div>
+        </div>
+      </section>
+    </main>
+
+    
+<script type="module" src="script.js"></script>
+
+</body>
+</html>

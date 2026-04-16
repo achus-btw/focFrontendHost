@@ -1,0 +1,197 @@
+:root {
+    --bg-color: #0f0f0f;
+    --text-color: #e0e0e0;
+    --accent: #00ffcc;
+    --topbar-height: 60px;
+}
+
+body, html {
+    margin: 0;
+    padding: 0;
+    background: var(--bg-color);
+    color: var(--text-color);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    overflow: hidden;
+}
+
+nav {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    height: var(--topbar-height);
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(10px);
+    display: flex;
+    align-items: center;
+    padding: 0 2rem;
+    z-index: 1000;
+    border-bottom: 1px solid #333;
+    box-sizing: border-box;
+}
+
+.container {
+    height: 100vh;
+    overflow-y: scroll;
+    scroll-snap-type: y mandatory;
+    scroll-behavior: smooth;
+    outline: none;
+}
+
+section {
+    height: 100vh;
+    width: 100%;
+    scroll-snap-align: start;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    box-sizing: border-box;
+    padding-top: var(--topbar-height);
+    position: relative;
+    overflow: hidden;
+}
+
+.hero h1 {
+    font-size: 4rem;
+    margin: 0;
+    color: var(--accent);
+}
+
+.hero p {
+    font-size: 1.5rem;
+    opacity: 0.8;
+    margin-top: 1rem;
+}
+
+.placeholder {
+    color: #555;
+    font-style: italic;
+}
+
+.guide {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 1rem;
+    color: white;
+    font-size: 18px;
+    position: fixed;
+    right: 2rem;
+    bottom: 2rem;
+    padding: 1.5rem;
+    z-index: 10;
+    pointer-events: none;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.dataPage {
+    width: calc(100% - 40px);
+    height: calc(100% - 40px);
+    margin: 10vh;
+    display: flex;
+    gap: 3vw;
+    border-radius: 25px;
+}
+
+.dataBox {
+    border-radius: 15px;
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    height:min(auto,80vh);
+    overflow:scroll;
+}
+.bikes{    
+  flex: 4 1 auto;
+}
+.forum {
+    flex: 2 1 auto;
+    padding: 30px;
+
+    background: 
+        linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)),
+        url('i.jpg');
+
+    background-size: cover;
+    background-position: center;
+
+    backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+}
+
+.post-box {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    height: 100%;
+}
+
+.post-box input, 
+.post-box textarea, 
+.post-box select {
+    padding: 14px;
+    background: rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: white;
+    border-radius: 10px;
+    font-size: 15px;
+    width: 100%;
+    box-sizing: border-box;
+    transition: all 0.3s ease;
+    outline: none;
+}
+
+.post-box input:focus, 
+.post-box textarea:focus, 
+.post-box select:focus {
+    border-color: var(--accent);
+    background: rgba(0, 255, 204, 0.05);
+    box-shadow: 0 0 15px rgba(0, 255, 204, 0.1);
+}
+
+.post-box select option {
+    background: #1a1a1a;
+    color: white;
+}
+
+.post-box textarea {
+    flex-grow: 1;
+    min-height: 120px;
+    resize: none;
+    line-height: 1.5;
+}
+
+.post-box button {
+    padding: 16px;
+    background: var(--accent);
+    color: #0b0b0b;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: 700;
+    font-size: 16px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 15px rgba(0, 255, 204, 0.2);
+}
+
+.post-box button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 255, 204, 0.3);
+    filter: brightness(1.1);
+}
+
+.post-box button:active {
+    transform: translateY(0);
+}
+.bikeItem{
+  background:rgba(255,255,255,0.1);
+  padding:10px;
+  margin:10px;
+  border-radius:2rem;
+
+}
+.bikeItem:hover{
+
+  background:rgba(255,255,255,0.2);
+}
