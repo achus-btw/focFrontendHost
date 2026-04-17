@@ -1,7 +1,7 @@
 import data from './data.json' with { type: 'json' };
 
 const NavbarTemplate = (name) => ``;
-
+const petrolCosts = 106.45;
 const SectionTemplate = (text) => `
   <section>
     <h2 class="placeholder">${text}</h2>
@@ -9,17 +9,19 @@ const SectionTemplate = (text) => `
 `;
 
 const emiPlans = [
-  { months: 6, interest: 5 },
-  { months: 12, interest: 8 },
-  { months: 24, interest: 10 }
+  { months: 6, interest: 14 },
+  { months: 12, interest: 16 },
+  { months: 24, interest: 18 },
+  { months: 0, interest: 0 }
 ];
 
 // EMI Calculation
 function calculateEMI(p, annualRate, months) {
   const r = annualRate / (12 * 100);
+  var toPay = p * 0.7;
   const powerTerm = Math.pow(1 + r, months);
-  const emi = (p * r * powerTerm) / (powerTerm - 1);
-  return parseFloat(emi.toFixed(2));
+  const emi = (toPay * r * powerTerm) / (powerTerm - 1);
+  return parseFloat(emi);
 }
 
 // Render extra sections (debug)
@@ -27,27 +29,28 @@ const render = () => {
   const main = document.getElementById('main-content');
 
   const newContent = `
-    ${SectionTemplate("System Ready")}
+    ${SectionTemplate("Thank you for using our services")}
   `;
 
   main.insertAdjacentHTML('beforeend', newContent);
 };
 
 // Check affordability
-function isBikeQualified(bike, money, distance, emiIndex) {
+function isBikeQualified(bike, money, distance, ten, intr) {
   const emi = calculateEMI(
     bike.price,
-    emiPlans[emiIndex].interest,
-    emiPlans[emiIndex].months
+    ten,
+    intr
   );
+  console.log("" + ten + '/' + intr + "/" + money)
 
-  const travelCost = 30 * distance / parseFloat(bike.milage) * 102;
+  const travelCost = 30 * distance / parseFloat(bike.milage) * petrolCosts;
 
   return money > (emi + travelCost);
 }
 
 // Render bikes
-const renderBikes = (filteredBikes, distance, emiIndex) => {
+const renderBikes = (filteredBikes, distance, ten, intr) => {
   const bikesContainer = document.querySelector('.bikes');
   bikesContainer.innerHTML = "";
 
@@ -63,8 +66,8 @@ const renderBikes = (filteredBikes, distance, emiIndex) => {
     // Calculate costs
     const emi = calculateEMI(
       bike.price,
-      emiPlans[emiIndex].interest,
-      emiPlans[emiIndex].months
+      ten,
+      intr
     );
 
     const travelCost = 30 * distance / parseFloat(bike.milage) * 102;
@@ -75,13 +78,12 @@ const renderBikes = (filteredBikes, distance, emiIndex) => {
         <h3>${bike.name}</h3>
         <p>Price: ₹${bike.price}</p>
         <p>Mileage: ${bike.milage} km/l</p>
-        <p>EMI: ₹${emi}</p>
+        <p>EMI: ₹${emi} with a downpayment of ₹${(bike.price * 0.3).toFixed(0)}</p>
         <p>Fuel Cost: ₹${travelCost.toFixed(2)}</p>
         <p><strong>Total Monthly Cost: ₹${totalMonthlyCost}</strong></p>
       </div>
     `;
 
-    // Click → Google search
     bikeCard.addEventListener('click', () => {
       const query = encodeURIComponent(bike.name + " bike");
       window.open(`https://www.google.com/search?q=${query}`, '_blank');
@@ -91,7 +93,6 @@ const renderBikes = (filteredBikes, distance, emiIndex) => {
   });
 };
 
-// Scroll fade effect
 const handleScroll = () => {
   const container = document.getElementById('main-content');
   const target = document.getElementById('fade-target');
@@ -108,12 +109,17 @@ const handleScroll = () => {
   target.style.opacity = opacity;
   if (hint) hint.style.opacity = opacity;
 };
-
-// Handle submit
 const handlePostSubmit = () => {
   const commuteDistance = parseFloat(document.getElementById('commuteDistance').value);
   const monthlyBudget = parseFloat(document.getElementById('monthlyBudget').value);
   const emiIndex = parseInt(document.getElementById('emiPlan').value);
+  var tenure = parseInt(document.getElementById('tenure').value);
+  var intrest = parseInt(document.getElementById('interest').value);
+  if (emiIndex != 3) {
+    tenure = emiPlans[emiIndex].months
+    intrest = emiPlans[emiIndex].interest
+
+  }
 
   if (isNaN(commuteDistance) || isNaN(monthlyBudget) || isNaN(emiIndex)) {
     alert("Please fill all fields correctly");
@@ -121,10 +127,10 @@ const handlePostSubmit = () => {
   }
 
   const filteredBikes = data.filter(bike =>
-    isBikeQualified(bike, monthlyBudget, commuteDistance, emiIndex)
+    isBikeQualified(bike, monthlyBudget, commuteDistance, tenure, intrest)
   );
 
-  renderBikes(filteredBikes, commuteDistance, emiIndex);
+  renderBikes(filteredBikes, commuteDistance, tenure, intrest);
 
   console.log("Filtered Bikes:", filteredBikes);
 };
@@ -137,6 +143,9 @@ const addEmiOptions = () => {
     const option = document.createElement('option');
     option.value = index;
     option.textContent = `${plan.months} months @ ${plan.interest}% interest`;
+    if (plan.months == 0) {
+      option.textContent = "custom"
+    }
 
     emiSelect.appendChild(option);
   });
@@ -152,6 +161,26 @@ window.onload = () => {
   main.addEventListener('scroll', handleScroll);
 
   const submitBtn = document.getElementById('submitBtn');
+  const emiPlan = document.getElementById('emiPlan');
+  const customEmiElement = document.getElementById('customEmi');
+
+  emiPlan.addEventListener('change', function() {
+    console.log(this.value)
+    if (this.value == 3) {
+      console.log("yes")
+      //this partis called correctly
+      customEmiElement.style.display = "block";
+
+      setTimeout(() => {
+        customEmiElement.style.opacity = "1";
+      }, 10);
+    } else {
+      customEmiElement.style.opacity = "0";
+      setTimeout(() => {
+        customEmiElement.style.display = "none";
+      }, 300);
+    }
+  });
   if (submitBtn) {
     submitBtn.addEventListener('click', handlePostSubmit);
   }

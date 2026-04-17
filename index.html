@@ -24,13 +24,19 @@
           <div class="dataBox forum">
             <div class="post-box">
             <h2>Enter the desired Search parameters</h2>
+            <p>daily commute distance(km):</p>
             <input type="number" step="0.1" id="commuteDistance" placeholder="Daily commute distance (km)">
             <input type="number" step="0.01" id="monthlyBudget" placeholder="Monthly budget for bike">
             <select id="emiPlan">
               <option value="" disabled selected>Select EMI Plan</option>
             </select>
+              <div id="customEmi" style="display: none; opacity: 0; transition: opacity 0.3s ease;">
+                  tenure(months):<input type="number" step="1" id="tenure" placeholder="tenure">
+                  <br>
+                  Interest(per annum):<input type="number" step="1" id="interest" placeholder="interest">
+              </div>
             <button id="submitBtn">Post</button>
-              <h3>Considering Petrol price as 102 rupee<br>Assuming no extra cost for maintanance</h3>
+              <h3>Considering Petrol price as 106.452 rupees<br>Assuming no extra cost for maintanance</h3>
             </div>
           </div>
           <div class="dataBox bikes">
